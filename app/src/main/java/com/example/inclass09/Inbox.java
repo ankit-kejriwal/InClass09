@@ -85,6 +85,7 @@ public class Inbox extends AppCompatActivity {
                         Email email = new Email();
                         email.subject = emailJSON.getString("subject");
                         email.created_at = emailJSON.getString("created_at");
+                        email.id = emailJSON.getString("id");
                         result.add(email);
                     }
                     Inbox.this.runOnUiThread(new Runnable() {
@@ -93,7 +94,7 @@ public class Inbox extends AppCompatActivity {
                             //Handle UI here
                             mLayoutManager = new LinearLayoutManager(Inbox.this);
                             mRecyclerView.setLayoutManager(mLayoutManager);
-                            mAdapter =  new EmailRecyclerViewAdapter(result);
+                            mAdapter =  new EmailRecyclerViewAdapter(result,Inbox.this);
                             mRecyclerView.setAdapter(mAdapter);
                         }
                     });

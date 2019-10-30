@@ -1,7 +1,7 @@
 package com.example.inclass09;
 
 public class Email {
-    String subject,created_at;
+    String subject,created_at,id;
 
     public Email() {
     }
@@ -22,11 +22,20 @@ public class Email {
         this.created_at = created_at;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Email{" +
                 "subject='" + subject + '\'' +
                 ", created_at='" + created_at + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 }
