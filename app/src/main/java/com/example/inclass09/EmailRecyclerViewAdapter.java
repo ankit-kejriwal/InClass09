@@ -4,6 +4,7 @@ package com.example.inclass09;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,10 +31,11 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Email email = mData.get(position);
         holder.textViewSubject.setText(email.getSubject());
         holder.textViewCreatedate.setText(email.getCreated_at());
+
     }
 
     @Override
@@ -42,15 +44,17 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewSubject;
         TextView textViewCreatedate;
+        ImageView imageViewDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewSubject = itemView.findViewById(R.id.textViewSubject);
             textViewCreatedate = itemView.findViewById(R.id.textViewCreatedate);
+            imageViewDelete = itemView.findViewById(R.id.imageViewDelete);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -62,6 +66,16 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
                 }
             });
 
+            imageViewDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    removeItem(getAdapterPosition());
+                }
+            });
+        }
+        public void removeItem(int position){
+            mData.remove(position);
+            notifyItemRemoved(position);
         }
     }
 }
