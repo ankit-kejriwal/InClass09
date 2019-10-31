@@ -40,10 +40,8 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
 
 
 
-    public EmailRecyclerViewAdapter(@NonNull ArrayList<Email> mData, Context ctx) {
+    public EmailRecyclerViewAdapter(@NonNull ArrayList<Email> mData) {
         this.mData = mData;
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ctx);
-        this.token = sharedPreferences.getString("token", null);
     }
 
 
@@ -52,6 +50,8 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.email_item, parent, false);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(parent.getContext());
+        this.token = sharedPreferences.getString("token", null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

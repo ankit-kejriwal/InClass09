@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,8 +30,10 @@ import okhttp3.ResponseBody;
 
 public class Inbox extends AppCompatActivity {
 
+    private static final int COMPOSE_REQ_CODE = 999;
     TextView textViewName;
     ImageView imageViewLogout;
+    ImageView imageViewCompose;
     RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
@@ -49,10 +52,18 @@ public class Inbox extends AppCompatActivity {
         textViewName = findViewById(R.id.textViewName);
         mRecyclerView = findViewById(R.id.my_recycler_view);
         imageViewLogout= findViewById(R.id.imageViewLogout);
+        imageViewCompose = findViewById(R.id.imageViewCompose);
         imageViewLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        imageViewCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Inbox.this,Compose.class);
+                startActivityForResult(intent,COMPOSE_REQ_CODE);
             }
         });
 
@@ -94,7 +105,7 @@ public class Inbox extends AppCompatActivity {
                             //Handle UI here
                             mLayoutManager = new LinearLayoutManager(Inbox.this);
                             mRecyclerView.setLayoutManager(mLayoutManager);
-                            mAdapter =  new EmailRecyclerViewAdapter(result,Inbox.this);
+                            mAdapter =  new EmailRecyclerViewAdapter(result);
                             mRecyclerView.setAdapter(mAdapter);
                         }
                     });

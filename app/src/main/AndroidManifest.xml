@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Inbox"></activity>
+        <activity android:name=".Compose"></activity>
+        <activity android:name=".Inbox" />
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity">
             <intent-filter>
