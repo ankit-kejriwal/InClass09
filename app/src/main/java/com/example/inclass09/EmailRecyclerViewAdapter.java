@@ -2,6 +2,7 @@ package com.example.inclass09;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -61,6 +62,7 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
         Email email = mData.get(position);
         holder.textViewSubject.setText(email.getSubject());
         holder.textViewCreatedate.setText(email.getCreated_at());
+        holder.email = email;
 
     }
 
@@ -75,6 +77,7 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
         TextView textViewSubject;
         TextView textViewCreatedate;
         ImageView imageViewDelete;
+        Email email;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -85,16 +88,13 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Log.d("demo",trackValue.getArtworkUrl100());
-//                    Context context = view.getContext();
-//                    Intent intent = new Intent(context,DisplayActivity.class);
-//                    intent.putExtra("track",trackValue);
-//                    context.startActivity(intent);
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context,DisplayMail.class);
+                    intent.putExtra("email",email);
+                    context.startActivity(intent);
                 }
             });
 
-            //372
-            //376
 
             imageViewDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,7 +127,6 @@ public class EmailRecyclerViewAdapter extends RecyclerView.Adapter<EmailRecycler
             String id = removedEmail.getId();
             mData.remove(position);
             notifyItemRemoved(position);
-            Log.d("heyo",id);
             return id;
         }
 

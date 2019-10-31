@@ -34,6 +34,8 @@ public class SignUp extends AppCompatActivity {
     EditText editTextrpassword;
     Button buttonsignup;
     Button buttoncancel;
+    String fname;
+    String lname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,9 @@ public class SignUp extends AppCompatActivity {
                     String  obj = response.body().string();
                     JSONObject Jobject = new JSONObject(obj);
                     String token = Jobject.getString("token");
+                    fname = Jobject.getString("user_fname");
+                    lname = Jobject.getString("user_lname");
+
                     return token;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -101,6 +106,8 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(SignUp.this, "User created", Toast.LENGTH_SHORT).show();
                 Intent returnIntent = getIntent();
                 returnIntent.putExtra("token",s);
+                returnIntent.putExtra("fname",fname);
+                returnIntent.putExtra("lname",lname);
                 setResult(RESULT_OK,returnIntent);
                 finish();
             } else {

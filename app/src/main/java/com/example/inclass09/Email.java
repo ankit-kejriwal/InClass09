@@ -1,9 +1,35 @@
 package com.example.inclass09;
 
-public class Email {
-    String subject,created_at,id;
+import java.io.Serializable;
+
+public class Email implements Serializable {
+    String subject,created_at,id,message,sender_fname,sender_lname;
 
     public Email() {
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getSender_fname() {
+        return sender_fname;
+    }
+
+    public void setSender_fname(String sender_fname) {
+        this.sender_fname = sender_fname;
+    }
+
+    public String getSender_lname() {
+        return sender_lname;
+    }
+
+    public void setSender_lname(String sender_lname) {
+        this.sender_lname = sender_lname;
     }
 
     public String getSubject() {
@@ -36,6 +62,9 @@ public class Email {
                 "subject='" + subject + '\'' +
                 ", created_at='" + created_at + '\'' +
                 ", id='" + id + '\'' +
+                ", message='" + message + '\'' +
+                ", sender_fname='" + sender_fname + '\'' +
+                ", sender_lname='" + sender_lname + '\'' +
                 '}';
     }
 }

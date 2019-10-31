@@ -1,5 +1,6 @@
 package com.example.inclass09;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class Inbox extends AppCompatActivity {
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     ArrayList<Email> result = new ArrayList<Email>();
+    String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +48,8 @@ public class Inbox extends AppCompatActivity {
         String lname = getIntent().getStringExtra("lname");
         textViewName = findViewById(R.id.textViewName);
         textViewName.setText(fname+" "+lname);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Inbox.this);
-        String token = sharedPreferences.getString("token", null);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Inbox.this);
+        token = sharedPreferences.getString("token", null);
 
         textViewName = findViewById(R.id.textViewName);
         mRecyclerView = findViewById(R.id.my_recycler_view);
@@ -56,6 +58,7 @@ public class Inbox extends AppCompatActivity {
         imageViewLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sharedPreferences.edit().remove("token").commit();
                 finish();
             }
         });
@@ -67,9 +70,23 @@ public class Inbox extends AppCompatActivity {
             }
         });
 
+        getInboxdata();
+
+
+    }
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == COMPOSE_REQ_CODE) {
+            if(resultCode == RESULT_OK){
+                getInboxdata();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    public void getInboxdata(){
+        result.clear();
         final OkHttpClient client = new OkHttpClient();
-        //372
-        //376
+
         Request request = new Request.Builder()
                 .url("http://ec2-18-234-222-229.compute-1.amazonaws.com/api/inbox")
                 .addHeader("Authorization","BEARER "+token)
@@ -96,6 +113,9 @@ public class Inbox extends AppCompatActivity {
                         Email email = new Email();
                         email.subject = emailJSON.getString("subject");
                         email.created_at = emailJSON.getString("created_at");
+                        email.sender_fname = emailJSON.getString("sender_fname");
+                        email.sender_lname = emailJSON.getString("sender_lname");
+                        email.message = emailJSON.getString("message");
                         email.id = emailJSON.getString("id");
                         result.add(email);
                     }
@@ -114,8 +134,6 @@ public class Inbox extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 }

@@ -65,12 +65,16 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Not found");
                 } else {
                     String token =  data.getStringExtra("token");
+                    String fname =  data.getStringExtra("fname");
+                    String lname =  data.getStringExtra("lname");
                     Log.d("demo",token);
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", token);
                     editor.commit();
                     Intent intent = new Intent(MainActivity.this,Inbox.class);
+                    intent.putExtra("fname",fname);
+                    intent.putExtra("lname",lname);
                     startActivity(intent);
 
                 }
